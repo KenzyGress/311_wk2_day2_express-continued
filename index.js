@@ -1,16 +1,25 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const commentsRouter = require("./routes/comments");
-const contacts = require("./data/contacts");
-const products = require("./data/products");
-const vehicles = require("./data/vehicles");
 const app = express();
+
+const products = require('./routes/products');
+const vehicles = require('./routes/vehicles');
+const contacts = require('./routes/contacts');
+const comments = require('./routes/comments');
+
+
+const bodyParser = require("body-parser");
 const port = process.env.PORT || 4001;
 
-app.use(express.static("public"));
+app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(commentsRouter);
+app.use(bodyParser.urlencoded({ extended:false}));
+
+
+app.use(products);
+app.use(vehicles);
+app.use(contacts);
+app.use(comments);
 
 app.listen(port, () => {
-  console.log(`Web server is listening on port ${port}!`);
+    console.log(`Web server is listening on port ${port}!`);
 });
